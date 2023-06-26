@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
   selector: 'hd-task1',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './task1.component.html',
-  styleUrls: ['./task1.component.scss']
+  template: 'Task 1 works',
+  styles: ['']
 })
 export class Task1Component {
 
