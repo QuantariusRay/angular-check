@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
 
 export type Todo = {
   id: number;
@@ -11,9 +11,10 @@ export type Todo = {
   providedIn: 'root',
 })
 export class DataService {
-  #initialData: Todo[] = [];
-  #data = new BehaviorSubject<Todo[]>([]);
-  #nextId = 1;
+  initialData$: Todo[] = [];
+  data$ = new BehaviorSubject<Todo[]>([]);
+  nextId$ = 1;
+
   readonly #defaultTodo: Todo = {
     id: -1,
     text: '',
@@ -29,22 +30,26 @@ export class DataService {
   }
 
   public getData(): Observable<Todo[]> {
-    return this.#data.asObservable();
+    return this.data$.asObservable();
   }
 
-  public add(todo: Partial<Todo>): Observable<Todo> {
-    const newTodo = { ...this.#defaultTodo, ...todo, id: this.#nextId++ };
-    this.#data.next([...this.#data.value, newTodo]);
+  public add(todo: string | null): Observable<Todo> {
+    if (!todo) {
+      return EMPTY;
+    }
+
+    const newTodo = { ...this.#defaultTodo, text: todo, id: this.nextId$++ };
+    this.data$.next([...this.data$.value, newTodo]);
     return of(newTodo);
   }
 
   public remove(id: number): Observable<void> {
-    this.#data.next(this.#data.value.filter((t) => t.id !== id));
+    this.data$.next(this.data$.value.filter((t) => t.id !== id));
     return of();
   }
 
   private initialize() {
-    this.#nextId = this.#initialData.length + 1;
-    this.#data.next(this.#initialData);
+    this.nextId$ = this.initialData$.length + 1;
+    this.data$.next(this.initialData$);
   }
 }

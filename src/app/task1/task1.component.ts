@@ -1,13 +1,21 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, NgFor } from '@angular/common';
+import { TodoListComponent } from '../components/todo-list/todo-list.component';
+import { TodoFormComponent } from '../components/todo-form/todo-form.component';
 
 @Component({
   selector: 'hd-task1',
   standalone: true,
-  imports: [CommonModule],
-  template: 'Task 1 works',
-  styles: ['']
+  imports: [
+    NgFor,
+    AsyncPipe,
+    TodoListComponent,
+    TodoFormComponent,
+  ],
+  template: `
+      <app-todo-form />
+      <app-todo-list />
+  `
 })
 export class Task1Component {
-
 }

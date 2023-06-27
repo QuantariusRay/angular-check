@@ -4,7 +4,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 @Component({
   standalone: true,
   template: `
-      <nav>
+      <nav data-cy="nav-list">
           <a routerLink="task1" routerLinkActive="styled">Task 1</a>
           <a routerLink="task2" routerLinkActive="styled">Task 2</a>
           <a routerLink="task3" routerLinkActive="styled">Task 3</a>

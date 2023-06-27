@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { NavigationComponent } from './components/navigation.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 @Component({
   selector: 'hd-root',

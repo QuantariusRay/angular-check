@@ -3,4 +3,43 @@
 body {
   padding: 0;
   margin: 0;
+  background-color: #0d0d0d;
+  color: white;
+}
+
+.cool-button {
+  width: auto;
+  margin: 0 4px;
+  grid-column-gap: 8px;
+  grid-row-gap: 8px;
+  text-align: center;
+  white-space: normal;
+  -webkit-text-fill-color: inherit;
+  object-fit: fill;
+  background-image: linear-gradient(90.27deg,#f926e1 .22%,#2ab5fb 99.76%);
+  background-clip: border-box;
+  border-radius: 100px;
+  grid-template-rows: auto auto;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-columns: 1fr;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  font-family: Airbnbcereal,sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+
+  &[disabled] {
+    background-image: none;
+    background-color: gray;
+  }
+
+  &-text {
+    color: #fff;
+    margin-right: 10px;
+    font-family: Airbnbcereal,sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 150%;
+  }
 }
