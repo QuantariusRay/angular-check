@@ -1,7 +1,7 @@
 import { TodoListComponent } from './todo-list.component';
 import { TestBed } from '@angular/core/testing';
-import { DataService } from '../../data.service';
-import { BehaviorSubject, of } from 'rxjs';
+import { DataService, Todo } from '../../data.service';
+import { BehaviorSubject } from 'rxjs';
 
 describe('To-do List Component', () => {
 
@@ -24,7 +24,7 @@ describe('To-do List Component', () => {
       ]
     }).then(() => {
       const data = TestBed.inject(DataService);
-      data.data$ = new BehaviorSubject([
+      data.data$ = new BehaviorSubject<Todo[]>([
         { id: 0, text: 'test', completed: false },
         { id: 1, text: 'example', completed: false },
       ]);
