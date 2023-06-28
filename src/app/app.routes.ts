@@ -7,5 +7,6 @@ export const routes: Routes = [
   { path: 'task3', loadComponent: () => import('./task3/task3.component').then((component) => component.Task3Component)},
   { path: 'task4', loadComponent: () => import('./task4/task4.component').then((component) => component.Task4Component)},
   { path: 'task5', loadComponent: () => import('./task5/task5.component').then((component) => component.Task5Component)},
+  { path: 'edit/:id', loadComponent: () => import('./edit/edit.component').then((component) => component.EditComponent)},
   { path: '**', pathMatch: 'full', redirectTo: 'task1'}
 ];

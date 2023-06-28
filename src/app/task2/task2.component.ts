@@ -12,9 +12,8 @@ import { TodoListComponent } from '../components/todo-list/todo-list.component';
   template: `
       <h1>Task 2</h1>
       <app-todo-form />
-      <app-todo-list />
+      <app-todo-list [preventEdit]="false"/>
   `,
-  styles: [``]
 })
 export class Task2Component {
 

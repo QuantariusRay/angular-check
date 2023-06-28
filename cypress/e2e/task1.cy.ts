@@ -1,4 +1,4 @@
-describe('template spec', () => {
+describe('Task 1 page', () => {
   beforeEach(() => {
     cy.visit('/task1');
   });

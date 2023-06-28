@@ -15,7 +15,7 @@ import { TodoFormComponent } from '../components/todo-form/todo-form.component';
   template: `
       <h1>Task 1</h1>
       <app-todo-form />
-      <app-todo-list />
+      <app-todo-list [preventEdit]="true" />
   `
 })
 export class Task1Component {

@@ -13,6 +13,7 @@ import { NgIf } from '@angular/common';
       <form class="form-group" [formGroup]="taskForm">
           <div class="input-container">
               <input formControlName="newTask"
+                     placeholder="Create a task to do"
                      data-cy="task-input"
                      class="form-field"/>
               <ng-container *ngIf="taskForm.get('newTask')?.invalid && 
@@ -33,35 +34,7 @@ import { NgIf } from '@angular/common';
   `,
   selector: 'app-todo-form',
   styles: [`
-    .form-group {
-      display: flex;
-      align-items: center;
-    }
 
-    .form-field {
-      width: 25rem;
-      height: 24px;
-      color: #333;
-      vertical-align: middle;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      padding: 8px 12px;
-      font-size: 14px;
-      line-height: 1.42857;
-    }
-
-    .form-field.ng-invalid.ng-touched {
-      border-color: red;
-    }
-    
-    .input-container {
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .invalid {
-      color: red;
-    }
   `]
 })
 export class TodoFormComponent {

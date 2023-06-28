@@ -1,10 +1,38 @@
-/* You can add global styles to this file, and also import other style files */
-
 body {
   padding: 0;
   margin: 0;
   background-color: #0d0d0d;
   color: white;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+}
+
+.form-field {
+  width: 25rem;
+  height: 24px;
+  color: #333;
+  vertical-align: middle;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 1.42857;
+}
+
+.form-field.ng-invalid.ng-touched {
+  border-color: red;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.invalid {
+  color: red;
 }
 
 .cool-button {
@@ -42,4 +70,11 @@ body {
     font-weight: 700;
     line-height: 150%;
   }
+}
+
+.icon-button {
+  background: none;
+  border: 0;
+  color: white;
+  cursor: pointer;
 }

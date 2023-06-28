@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { NavigationService } from './services/navigation.service';
 
 @Component({
   selector: 'hd-root',
@@ -19,4 +20,9 @@ import { NavigationComponent } from './components/navigation/navigation.componen
     }
   `],
 })
-export class AppComponent {}
+export class AppComponent {
+  // dummy constructor to initialize the navigation service and begin tracking history
+  constructor(private readonly navigation: NavigationService) {
+
+  }
+}

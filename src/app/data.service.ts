@@ -33,6 +33,10 @@ export class DataService {
     return this.data$.asObservable();
   }
 
+  public getTaskById(id: number | undefined): Todo | undefined {
+    return this.data$.value.find(data => data.id === id);
+  }
+
   public add(todo: string | null): Observable<Todo> {
     if (!todo) {
       return EMPTY;
@@ -45,6 +49,20 @@ export class DataService {
 
   public remove(id: number): Observable<void> {
     this.data$.next(this.data$.value.filter((t) => t.id !== id));
+    return of();
+  }
+
+  public edit(id: number | undefined, newText: string): Observable<void> {
+    if (!id || !newText) {
+      return of();
+    }
+
+    const todo = this.data$.value.find(data => data.id === id);
+
+    if (todo) {
+     todo.text = newText;
+    }
+
     return of();
   }
 

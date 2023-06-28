@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
-import { AsyncPipe, NgFor, TitleCasePipe } from '@angular/common';
+import { Component, inject, Input } from '@angular/core';
+import { AsyncPipe, NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import { DataService } from '../../data.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -8,6 +9,8 @@ import { DataService } from '../../data.service';
     AsyncPipe,
     NgFor,
     TitleCasePipe,
+    RouterLink,
+    NgIf
   ],
   template: `
       <div class="todo-grid">
@@ -17,8 +20,13 @@ import { DataService } from '../../data.service';
           </div>
           <ng-container *ngFor="let task of store.data$ | async; let i = index">
               <span [attr.data-cy]="'task' + i">{{ task.text | titlecase }}</span>
-              <div>
-                  <button [attr.data-cy]="'task' + i + '-remove'" (click)="store.remove(task.id)">X</button>
+              <div class="actions">
+                  <button [attr.data-cy]="'task' + i + '-remove'" class="icon-button" (click)="store.remove(task.id)">
+                      <span class="material-icons" aria-hidden="false" aria-label="Edit To-Do">delete</span>
+                  </button>
+                  <a [routerLink]="['/edit', task.id]" [attr.data-cy]="'task' + i + '-edit'" class="icon-button" *ngIf="!preventEdit">
+                      <span class="material-icons" aria-hidden="false" aria-label="Edit To-Do">edit</span>
+                  </a>
               </div>
           </ng-container>
       </div>
@@ -46,4 +54,7 @@ import { DataService } from '../../data.service';
 })
 export class TodoListComponent {
   store = inject(DataService);
+
+  // this is strictly for displaying a diff between task 1 and the others
+  @Input() preventEdit: boolean = true;
 }
