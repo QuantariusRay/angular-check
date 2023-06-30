@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
+import { BehaviorSubject, map, Observable, of } from 'rxjs';
+import { TodoForm } from './components/todo-form/todo-form.component';
 
 export type Todo = {
   id: number;
   text: string;
   completed: boolean;
+  category: string;
 };
 
 @Injectable({
@@ -13,12 +15,17 @@ export type Todo = {
 export class DataService {
   initialData$: Todo[] = [];
   data$ = new BehaviorSubject<Todo[]>([]);
+  categories$: Observable<string[]> = this.data$.pipe(
+    map(data => data.map(d => d.category)),
+    map((categories: string[]) => [...new Set(categories)])
+  );
   nextId$ = 1;
 
   readonly #defaultTodo: Todo = {
     id: -1,
     text: '',
     completed: false,
+    category: ''
   };
 
   constructor() {
@@ -37,14 +44,15 @@ export class DataService {
     return this.data$.value.find(data => data.id === id);
   }
 
-  public add(todo: string | null): Observable<Todo> {
-    if (!todo) {
-      return EMPTY;
-    }
+  public add(todo: TodoForm): void {
+    const newTodo: Todo = {
+      ...this.#defaultTodo,
+      text: todo.text,
+      id: this.nextId$++,
+      category: todo.category
+    };
 
-    const newTodo = { ...this.#defaultTodo, text: todo, id: this.nextId$++ };
     this.data$.next([...this.data$.value, newTodo]);
-    return of(newTodo);
   }
 
   public remove(id: number): Observable<void> {

@@ -7,6 +7,7 @@ body {
 
 .form-group {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 }
 
@@ -20,6 +21,7 @@ body {
   padding: 8px 12px;
   font-size: 14px;
   line-height: 1.42857;
+  margin: 8px auto;
 }
 
 .form-field.ng-invalid.ng-touched {
@@ -38,6 +40,7 @@ body {
 .cool-button {
   width: auto;
   margin: 0 4px;
+  cursor: pointer;
   grid-column-gap: 8px;
   grid-row-gap: 8px;
   text-align: center;
@@ -60,6 +63,7 @@ body {
   &[disabled] {
     background-image: none;
     background-color: gray;
+    cursor: default;
   }
 
   &-text {

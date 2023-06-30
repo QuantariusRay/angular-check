@@ -25,8 +25,8 @@ describe('To-do List Component', () => {
     }).then(() => {
       const data = TestBed.inject(DataService);
       data.data$ = new BehaviorSubject<Todo[]>([
-        { id: 0, text: 'test', completed: false },
-        { id: 1, text: 'example', completed: false },
+        { id: 0, text: 'test', completed: false, category: '' },
+        { id: 1, text: 'example', completed: false, category: '' },
       ]);
       cy.stub(data, 'remove').as('removeAction');
     });

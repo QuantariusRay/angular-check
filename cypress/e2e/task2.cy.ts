@@ -15,7 +15,7 @@ describe('Task 2 page', () => {
     cy.url().should('include', '/edit/1');
 
     cy.log('the edit screen should have a form with an element that contains current task/thing/todo value');
-    cy.get('[data-cy="task-input"]').as('task-input').should('have.value', 'test');
+    cy.get('[data-cy="edit-input"]').as('task-input').should('have.value', 'test');
     cy.get('@task-input').type('er');
     cy.get('[data-cy="update-button"]').click();
 
