@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable, of } from 'rxjs';
 import { TodoForm } from './components/todo-form/todo-form.component';
 
 export type Todo = {
@@ -13,13 +13,22 @@ export type Todo = {
   providedIn: 'root',
 })
 export class DataService {
-  initialData$: Todo[] = [];
-  data$ = new BehaviorSubject<Todo[]>([]);
-  categories$: Observable<string[]> = this.data$.pipe(
+  private initialData$: Todo[] = [];
+  private data$ = new BehaviorSubject<Todo[]>([]);
+  private queryTerm$ = new BehaviorSubject<string>('');
+  private nextId$ = 1;
+
+  public filteredData$ = combineLatest([
+    this.data$,
+    this.queryTerm$
+  ]).pipe(
+    map(([data, query]: [Todo[], string]) => data.filter((datum: Todo) => datum.category.includes(query as string)))
+  );
+
+  public readonly categories$: Observable<string[]> = this.data$.pipe(
     map(data => data.map(d => d.category)),
     map((categories: string[]) => [...new Set(categories)])
   );
-  nextId$ = 1;
 
   readonly #defaultTodo: Todo = {
     id: -1,
@@ -38,6 +47,10 @@ export class DataService {
 
   public getData(): Observable<Todo[]> {
     return this.data$.asObservable();
+  }
+
+  updateSearchTerm(searchQuery: string) {
+    this.queryTerm$.next(searchQuery);
   }
 
   public getTaskById(id: number | undefined): Todo | undefined {
