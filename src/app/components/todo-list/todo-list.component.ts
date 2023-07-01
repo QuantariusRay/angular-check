@@ -1,8 +1,10 @@
 import { Component, HostBinding, inject, Input } from '@angular/core';
 import { AsyncPipe, NgFor, NgIf, TitleCasePipe } from '@angular/common';
-import { DataService } from '../../data.service';
+import { DataService, Todo } from '../../data.service';
 import { RouterLink } from '@angular/router';
 import { GroupSearchComponent } from '../group-search/group-search.component';
+import { ConfirmationService } from '../../services/confirmation.service';
+import { filter, switchMap, take } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -30,7 +32,7 @@ import { GroupSearchComponent } from '../group-search/group-search.component';
                 <a [routerLink]="['/edit', task.id]" [attr.data-cy]="'task' + i + '-edit'" class="icon-button" *ngIf="!preventEdit">
                     <span class="material-icons" aria-hidden="false" aria-label="Edit To-Do">edit</span>
                 </a>
-                <button [attr.data-cy]="'task' + i + '-remove'" class="icon-button" (click)="store.remove(task.id)">
+                <button [attr.data-cy]="'task' + i + '-remove'" class="icon-button" (click)="deleteTask(task)">
                     <span class="material-icons" aria-hidden="false" aria-label="Edit To-Do">delete</span>
                 </button>
             </div>
@@ -75,6 +77,7 @@ import { GroupSearchComponent } from '../group-search/group-search.component';
 })
 export class TodoListComponent {
   store = inject(DataService);
+  confirmation = inject(ConfirmationService);
 
   // this is strictly for displaying a diff between task 1 and the others
   @Input() preventEdit: boolean = true;
@@ -82,4 +85,14 @@ export class TodoListComponent {
   // this is strictly for task 4 and 5 and showing grid columns
   @HostBinding('class.group-grid')
   @Input() displayGroupData: boolean = false;
+
+  // I would never do this outside of this example, and its disappointing
+  deleteTask(task: Todo): void {
+    this.confirmation.confirmDeletion(task.category, task.text)
+      .pipe(
+        take(1),
+        filter(resp => !!resp),
+        switchMap(() => this.store.remove(task.id))
+      ).subscribe();
+  }
 }

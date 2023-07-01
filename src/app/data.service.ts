@@ -53,7 +53,7 @@ export class DataService {
     this.queryTerm$.next(searchQuery);
   }
 
-  public getTaskById(id: number | undefined): Todo | undefined {
+  public getTaskById(id: number): Todo | undefined {
     return this.data$.value.find(data => data.id === id);
   }
 
@@ -73,15 +73,16 @@ export class DataService {
     return of();
   }
 
-  public edit(id: number | undefined, newText: string): Observable<void> {
-    if (!id || !newText) {
+  public edit(id: number, todo: TodoForm): Observable<void> {
+    if (!todo) {
       return of();
     }
 
-    const todo = this.data$.value.find(data => data.id === id);
+    const todoToEdit = this.data$.value.find(data => data.id === id);
 
-    if (todo) {
-     todo.text = newText;
+    if (todoToEdit) {
+      todoToEdit.text = todo.text;
+      todoToEdit.category = todo.category;
     }
 
     return of();
